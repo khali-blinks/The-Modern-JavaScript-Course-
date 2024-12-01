@@ -184,3 +184,23 @@ function furtune (rich,poor){
 }
 const dawa = furtune('kanzo','waakye');
 dawa('fish');
+
+// Array Callback Methods
+// For Each
+const books = [{
+    title : 'Holy Quran',
+    authors : ['Allah','Allah'],
+    rating : 5
+}, {
+    title : 'Hadith',
+    authors : ['Mohammed','S.A.W'],
+    rating : 5
+}, {
+    title : 'Tafsir',
+    authors : ['Ibn Kathim','Jadal'],
+    rating : 5
+}
+]
+books.forEach(function(item,idx){
+    console.log(item['title'].toLocaleUpperCase(),idx)
+})
