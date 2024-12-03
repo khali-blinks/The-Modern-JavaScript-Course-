@@ -204,3 +204,149 @@ const books = [{
 books.forEach(function(item,idx){
     console.log(item['title'].toLocaleUpperCase(),idx)
 })
+
+// Map
+const numbers = [20,40,50,21,62,54];
+const words = ['asap','byob','rsvp','diy'];
+
+// Example 1
+const double = numbers.map(function(num){
+    return num * 2;
+})
+
+// Example 2
+const dict = numbers.map(function(num){
+    return { 
+        value : num,
+        isEven : num % 2 == 0
+    }
+})
+
+// Example 3
+const abbrevs = words.map(function(word){
+    return word.toUpperCase().split('').join('.')
+})
+
+// Example 4
+const bookTitle = books.map(function(bk){
+    return bk.title
+})
+
+// Arrow Functions with Implicit Returns
+const degits = [1,2,2,3,4,5,6,7,8]
+
+// Example 1
+const db1 = x => {
+    return x**2
+}
+
+// Example 2
+const db2 = x => x * 3;
+const db3 = degits.map(x => x % 2 === 0? 'even' : 'odd');
+
+// Find
+let movies = ['Venom','The last dance','The Dean of Thieves', 'Crazy dudes']
+
+// Example 1
+const guz = movies.find(x => {return x.includes('The')});
+const guzz = movies.find(x => {return x.indexOf('The')=== 0});
+
+// Example 2
+const highR = books.find(x => x.rating > 4);
+
+// Filter
+// Example 1
+const nums = [34, 35, 67, 54, 109, 102, 32, 9];
+
+const odds = nums.filter(y => y % 2 === 1)
+
+// Example 2
+const bookz = [{
+    title: 'Good Omens',
+    authors: ['Terry Pratchett', 'Neil Gaiman'],
+    rating: 4.25,
+    genres: ['fiction', 'fantasy']
+  },
+  {
+    title: 'Changing My Mind',
+    authors: ['Zadie Smith'],
+    rating: 3.83,
+    genres: ['nonfiction', 'essays']
+  },
+  {
+    title: 'Bone: The Complete Edition',
+    authors: ['Jeff Smith'],
+    rating: 4.42,
+    genres: ['fiction', 'graphic novel', 'fantasy']
+  },
+  {
+    title: 'American Gods',
+    authors: ['Neil Gaiman'],
+    rating: 4.11,
+    genres: ['fiction', 'fantasy']
+  },
+  {
+    title: 'A Gentleman in Moscow',
+    authors: ['Amor Towles'],
+    rating: 4.36,
+    genres: ['fiction', 'historical fiction']
+  },
+  {
+    title: 'The Name of the Wind',
+    authors: ['Patrick Rothfuss'],
+    rating: 4.54,
+    genres: ['fiction', 'fantasy']
+  },
+  {
+    title: 'The Overstory',
+    authors: ['Richard Powers'],
+    rating: 4.19,
+    genres: ['fiction', 'short stories']
+  },
+  {
+    title: 'The Way of Kings',
+    authors: ['Brandon Sanderson'],
+    rating: 4.65,
+    genres: ['fantasy', 'epic']
+  },
+  {
+    title: 'Lord of the flies',
+    authors: ['William Golding'],
+    rating: 3.67,
+    genres: ['fiction']
+  }
+]
+
+const rat = bookz.filter( bk => bk.rating > 3.5);
+const genres = bookz.filter( bk => bk.genres.includes('fantasy')||bk.genres.includes('essays'));
+
+const query = 'The';
+const search = bookz.filter(bk => {
+    let tit = bk.title.toLowerCase();
+    return tit.includes(query.toLowerCase())
+})
+
+// Every & Some
+// Example
+const wordss = ['dog','bag','dig','log','bag','nag']
+
+const threeLetter = wordss.every( word => word.length === 3);
+const endG = wordss.every(word => word[word.length - 1] === 'g' );
+
+const letterD = wordss.some( word => word[0] === 'd');
+
+// Reduce
+// Example 1
+const numm = [3,5,4,50,6];
+const product = numm.reduce((preV, curV)=>{
+    return preV * curV
+})
+
+// Example 2
+const grades = [ 54,65,87,69,74,59,41,36,75,92];
+const maxGrade = grades.reduce((max,curGrade) => {
+    if (curGrade > max){
+        return curGrade
+    }return max
+})
+const minGrade = grades.reduce((min, curGrade)=> (Math.min(min,curGrade)));
