@@ -350,3 +350,176 @@ const maxGrade = grades.reduce((max,curGrade) => {
     }return max
 })
 const minGrade = grades.reduce((min, curGrade)=> (Math.min(min,curGrade)));
+
+// Example 3
+const votes = ['y', 'y', 'n', 'y', 'n', 'y', 'n', 'y', 'n', 'n', 'n', 'y', 'y'];
+
+// To tally votes
+const votesT = votes.reduce((tally,currV) => {
+    if (tally[currV]){
+        tally[currV]++
+    } else {
+        tally[currV] = 1;
+    } return tally
+},{})
+
+const results = votes.reduce((tally, val) => {
+    tally[val] = (tally[val] || 0) + 1;
+    return tally;
+  }, {});
+
+// Example 4 
+ // To group books by rating: 
+const groupedByRatings = bookz.reduce((groupedBooks, book) => {
+    const key = Math.floor(book.rating);
+    if (!groupedBooks[key]) groupedBooks[key] = [];
+    groupedBooks[key].push(book)
+    return groupedBooks;
+  }, {})
+
+// Default Parameters
+// Previously
+const mutple = (x,y) => {
+    y = typeof(y) === 'undefined'? 1 : y;
+    return x * y
+}
+
+// Example 
+const greett = (person,greeting = 'Masa', sign = 'bhim!') => {
+    console.log(`${person} ${greeting} ${sign}`)
+}
+
+// Spread 
+// Example 1
+const bazinga = ['fish','momoni','tuozafi','banku']
+const spreadd = (a,b,c,d) => {
+    console.log(a);
+    console.log(b);
+    console.log(c);
+    console.log(d);
+}
+spreadd(...bazinga);
+
+// Example 2
+const cephalopods = ['dumbo octopus', 'humboldt squid', 'flamboyant cuttlefish'];
+const gastropods = ['giant african snail', 'banana slug', 'variable neon slug'];
+const cnidaria = ['fire coral', 'moon jelly'];
+
+const inverts = [...cephalopods,...gastropods,...cnidaria];
+const cephCopy = [...cephalopods]; // making a copy
+
+// Example 3
+const feline = {
+    legs: 4,
+    family: 'Felidae'
+  };
+  
+  const canine = {
+    family: 'Caninae',
+    furry: true,
+    legs: 4
+  };
+  
+  const dog = {
+    ...canine,
+    isPet: true,
+    adorable: true
+  }
+
+  const houseCat = { ...feline,isGrumpy : true, rateater : 'excellent'}
+  const catDogClone = {
+    ...houseCat
+  }
+  
+  const random = [...'hello', {
+    ...houseCat
+  }]
+
+// The Arguments Object
+// Example
+function sum() {
+    //It is NOT an array, we have to turn it into one if we want to use array methods
+    const argsArr = [...arguments]
+    return argsArr.reduce((total, currVal) => {
+      return total + currVal
+    })
+  }
+
+// Rest Parameters
+// Example 1
+const addition = (...num) => {
+    return num.reduce((totalV,CurrentV) => {
+        return totalV + CurrentV
+    })
+}
+
+// Example 2
+const timesin = (...nums) => (nums.reduce((neww,old)=> neww * old))
+
+// Exammple 3
+const fullName = (first,last,...others)=>{
+    console.log(first);
+    console.log(last);
+    console.log(others)
+}
+
+// Destructuring Arrays
+// Example 
+const raceResults = [
+    'Eliud Kipchoge',
+    'Feyisa Lelisa',
+    'Galen Rupp',
+    'Ghirmay Ghebreslassie',
+    'Alphonce Simbu',
+    'Jared Ward'
+  ];
+
+const [gold,silver,bronze] = raceResults;
+const [first,,third,,fifth] = raceResults;
+const [winner,...losers] = raceResults;
+
+// Destructuring Objects
+// Example 
+const runner = {
+    first: "Eliud",
+    last: "Kipchoge",
+    country: "Kenya",
+    title: "Elder of the Order of the Golden Heart of Kenya"
+  }
+
+const { first : firstName,last : lastName} = runner;
+const {...other} = runner;  
+
+// Nested Destructuring
+// Example
+const resultt = [{
+    first: "Eliud",
+    last: "Kipchoge",
+    country: "Kenya",
+  },
+  {
+    first: 'Feyisa',
+    last: 'Lilesa',
+    country: 'Ethiopia'
+  },
+  {
+    first: 'Galen',
+    last: 'Rupp',
+    country: 'United States'
+  }
+]
+
+const [,{country}] = resultt;
+const [{first : goldWinner},,{country : ghetto}]= resultt;
+
+// Destructuring Parameters
+// Example 1
+const print = ({first,last,title}) => {
+    console.log(`${first} ${last} ${title}`)
+}
+
+// Example 2
+const response = [ 'HTTP/1.1','200 OK','application/json'];
+const parseR = ([protocol,statusCode,contentType]) => {
+    console.log(`Status : ${statusCode}`)
+}
