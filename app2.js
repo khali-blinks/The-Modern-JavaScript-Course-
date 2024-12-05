@@ -523,3 +523,114 @@ const response = [ 'HTTP/1.1','200 OK','application/json'];
 const parseR = ([protocol,statusCode,contentType]) => {
     console.log(`Status : ${statusCode}`)
 }
+
+// Computed Properties
+const role = 'host';
+const person = 'Jools Holland';
+const role2 = 'Director'
+const person2 = 'James Cameron'
+
+// The old way Of Making objects
+//const team = {};
+//team[role] = person;
+//team[role2] = person2;
+//console.log(team);
+
+// Using new way
+const team = { [role]: person , [role2] : person2}
+console.log(team)
+
+// Example
+function addProp (obj, h, v){
+    const copy = {...obj};
+    obj[h] = v;
+    return obj
+}
+const res = addProp(team,'fish','tilapia');
+
+// Example 2
+const addProp1 = (obj,k,g)=>{
+    return {...obj,[k] : g}
+}
+
+const res1 = addProp1(team, 'Man U','Zuuku')
+
+// Adding Methods to Objects
+const math = {
+    add : function(a,b){
+        return a + b
+    },
+    multiply : function(a,b){
+        return a * b
+    }
+}
+
+// Method Shorthand Syntax
+const auth = {
+    user :'Mamasita',
+    logIn(){
+        console.log('I have logged IN')
+    },
+    bark(){
+        console.log('Baganziga !!')
+    }
+}
+
+// This Method
+// Example 1
+function sayHi() {
+    console.log("HI")
+    //this refers to the window (global scope object in the browser)
+    console.log(this);
+  }
+
+// Example 2
+const persson = {
+    first: 'Cherilyn',
+    last: 'Sarkisian',
+    nickName: 'Cher',
+    fullName() {
+      //In a method, this refers to the object the method "lives" in:
+      const {first,last,nickName} = this;
+      return `${first} ${last } AKA ${nickName}`;
+    },
+    printBio() {
+      const fullName = this.fullName();
+      console.log(`${fullName} is a person!`)
+    },
+    laugh: () => {
+        //Arrow functions don't get their 'own' this.
+        console.log(this);
+        console.log(`${this.nickName} says HAHAHAHAH`)
+      }
+}
+
+// INVOCATION CONTEXT MATTERS!!!
+//person.printBio(); //THIS refers to the person object
+
+const printBio = person.printBio;
+//printBio(); //THIS refers to window object
+
+const annoyer = {
+    phrases: ["literally", "cray cray", "I can't even", "Totes!", "YOLO", "Can't Stop, Won't Stop"],
+    pickPhrase() {
+      const {
+        phrases
+      } = this;
+      const idx = Math.floor(Math.random() * phrases.length);
+      return phrases[idx]
+    },
+    start() {
+      //Use an arrow function to avoid getting a different 'this':
+      this.timerId = setInterval(() => {
+        console.log(this.pickPhrase())
+      }, 3000)
+    },
+    stop() {
+      clearInterval(this.timerId);
+      console.log("PHEW THANK HEAVENS THAT IS OVER!")
+    }
+  }
+
+//NB : Persson example's laugh method is an arrow function 
+// at the top level of the object, so it does not inherit this from persson.
