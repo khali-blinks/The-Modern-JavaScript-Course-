@@ -150,3 +150,42 @@ const hrChart = makeChart(warriorsGames, 'Houston');
 //Append them!
 gsSection.appendChild(gsChart);
 houstonSection.appendChild(hrChart);
+
+// addEventListner
+const btn = document.querySelector('button');
+
+btn.addEventListener('click', function() {
+	alert('CLICKED!!!');
+});
+
+btn.addEventListener('click', function() {
+	console.log('SECOND THING!!');
+});
+
+btn.addEventListener('mouseover', function() {
+	btn.innerText = 'STOP TOUCHING ME';
+});
+
+btn.addEventListener('mouseout', function() {
+	btn.innerText = 'Click Me!';
+});
+
+window.addEventListener('scroll', function() {
+	console.log('STOP SCROLLING!!');
+});
+
+// The Impossible Button Demo
+const btn1 = document.querySelector('#newbutton');
+
+btn1.addEventListener('mouseover', function() {
+	console.log('MOUSED OVER ME!');
+	const height = Math.floor(Math.random() * window.innerHeight);
+	const width = Math.floor(Math.random() * window.innerWidth);
+	btn1.style.left = `${width}px`;
+	btn1.style.top = `${height}px`;
+});
+
+btn1.addEventListener('click', function() {
+	btn1.innerText = 'YOU GOT ME!';
+	document.body.style.backgroundColor = 'green';
+});
