@@ -36,6 +36,6 @@ firstReq1.addEventListener('load', function() {
 firstReq1.addEventListener('error', (e) => {
 	console.log('ERROR!!!!!!');
 });
-firstReq1.open('GET', 'https://swapi.tech/api/planets/');
+firstReq1.open('GET', 'https://www.swapi.tech/api/planets/');
 firstReq1.send();
 console.log('Request Sent!');
