@@ -15,13 +15,13 @@ class Timer{
     }
     start = () => {
         if (this.onStart){
-            this.onStart();
+            this.onStart(this.timeRemaining);
         }
         this.tick();
         // this.interval is an instance property that stores the interval ID.
         // It ensures that the ID is accessible across all methods in the same instance of the Timer class.
         // Using const or let would restrict the scope of the interval ID to the start method, breaking the functionality of the pause method.
-        this.interval = setInterval(this.tick,1000);       
+        this.interval = setInterval(this.tick,50);       
     }
     pause = () => {
         clearInterval(this.interval)
@@ -33,9 +33,9 @@ class Timer{
                 this.onComplete();
             }
         } else{
-            this.timeRemaining = this.timeRemaining - 1;
+            this.timeRemaining = this.timeRemaining - 0.05;
             if (this.onTick){
-                this.onTick();
+                this.onTick(this.timeRemaining);
             }
         }       
     }
@@ -46,7 +46,7 @@ class Timer{
     // The setter function must accept an argument because it's responsible for updating a value.
     // The time argument represents the new value you want to set for this.timeRemaining.
     set timeRemaining(time){
-        this.durationInput.value = time;
+        this.durationInput.value = time.toFixed(2);
     }
 }
 
