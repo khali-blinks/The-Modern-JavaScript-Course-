@@ -1,77 +1,109 @@
-const fetchData = async (searchTerm) => {
-    const response = await axios.get('http://www.omdbapi.com/', {
-        params : {
-            apikey : '99dd3f68',
-            s : searchTerm
+const autoCompleteConfig = {
+    renderOption(movie){
+        const imgSrc = movie.Poster === "N/A"? '': movie.Poster // movies without images
+        return `
+            <img src = "${imgSrc}"/>
+            ${movie.Title} (${movie.Year})`
+    },
+    inputValue(movie){
+        return movie.Title
+    },
+    async fetchData (searchTerm) {
+        const response = await axios.get('http://www.omdbapi.com/', {
+            params : {
+                apikey : '99dd3f68',
+                s : searchTerm
+            }
+        })
+    
+        if (response.data.Error){
+            return [];
         }
-    })
-
-    if (response.data.Error){
-        return [];
+        return response.data.Search   
     }
-    return response.data.Search
-
 }
-
-const root = document.querySelector('.autocomplete');
-root.innerHTML = `
-    <label><b>Search For a Movie</b></label>
-    <input class = "input" />
-    <div class = "dropdown">
-        <div class = "dropdown-menu">
-            <div class = "dropdown-content results"></div>
-        </div>
-    </div>
-`;
-
-const input = document.querySelector('input');
-const dropdown = document.querySelector('.dropdown')
-const resultsWrapper = document.querySelector('.results')
-
-
-
-const onInput = async event => {
-        const movies = await fetchData(event.target.value); 
-        if (!movies.length){
-            dropdown.classList.remove('is-active');
-            return;
-        }
-        resultsWrapper.innerHTML = ''; // to clear out input for new search
-
-        dropdown.classList.add('is-active')
-        for (let movie of movies){
-            const option = document.createElement('a');
-            const imgSrc = movie.Poster === "N/A"? '': movie.Poster // movies without images
-
-            option.classList.add('dropdown-item')
-            option.innerHTML = `
-                <img src = "${imgSrc}"/>
-                ${movie.Title}         
-            `;
-            resultsWrapper.appendChild(option)
-            option.addEventListener('click', () => {
-                dropdown.classList.remove('is-active');
-                input.value = movie.Title;
-                onMovieSelect(movie);
-            })
-            
-
-        } 
-
-}
-input.addEventListener('input', debounce(onInput,500));
-document.addEventListener('click', event => {
-    if (!root.contains(event.target)){
-        dropdown.classList.remove('is-active')
-    }
+createAutoComplete({
+    ...autoCompleteConfig,
+    root : document.querySelector('#left-autocomplete'), 
+    onOptionSelect(movie){
+        document.querySelector('.tutorial').classList.add('is-hidden');
+        onMovieSelect(movie,document.querySelector('#left-summary'),'left');
+    }   
+})
+createAutoComplete({
+    ...autoCompleteConfig,
+    root : document.querySelector('#right-autocomplete'), 
+    onOptionSelect(movie){
+        document.querySelector('.tutorial').classList.add('is-hidden');
+        onMovieSelect(movie,document.querySelector('#right-summary'),'right');
+    }   
 })
 
-const onMovieSelect = async (movie) => {
+let rightSide;
+let leftSide;
+const onMovieSelect = async (movie,summaryTarget, side) => {
     const response = await axios.get('http://www.omdbapi.com/', {
         params : {
             apikey : '99dd3f68',
             i : movie.imdbID
         }
     })
-    console.log(response.data)
+    summaryTarget.innerHTML = movieTemplate(response.data);
+    if (side === 'left'){
+        leftSide = response.data;
+    } else {
+        rightSide = response.data;
+    }
+    if (leftSide && rightSide){
+        runComparison();
+    }
+}
+
+const runComparison = () => {
+
+}
+
+const movieTemplate = (movieDetail) => {
+    const dollars = movieDetail.BoxOffice.replace(/\$/g,'').replace(/,/g,'');
+    const metaScore = parseInt(movieDetail.Metascore);
+    const imdbRating = parseFloat(movieDetail.imdbRating);
+    const imdbVotes = parseInt(movieDetail.imdbVotes.replace(/,/g,''));
+    console.log(dollars,metaScore,imdbRating,imdbVotes)
+
+    return `
+        <article class="media">
+            <figure class = "media-left">
+                <p class="image">
+                    <img src = "${movieDetail.Poster}"/>
+                </p>
+            </figure>
+            <div class = "media-content">
+                <div class = "content">
+                    <h1>${movieDetail.Title}</h1>
+                    <h4>${movieDetail.Genre}</h4>
+                    <p>${movieDetail.Plot}</p>
+                </div>
+            </div>       
+        </article> 
+        <article class = "notification is-primary">
+            <p class="title">${movieDetail.Awards}</p>
+            <p class="subtitle">Awards</p>
+        </article>
+        <article class = "notification is-primary">
+            <p class="title">${movieDetail.BoxOffice}</p>
+            <p class="subtitle">Box Office</p>
+        </article>
+        <article class = "notification is-primary">
+            <p class="title">${movieDetail.Metascore}</p>
+            <p class="subtitle">Metascore</p>
+        </article>
+        <article class = "notification is-primary">
+            <p class="title">${movieDetail.imdbRating}</p>
+            <p class="subtitle">IMDB Rating</p>
+        </article>
+        <article class = "notification is-primary">
+            <p class="title">${movieDetail.imdbVotes}</p>
+            <p class="subtitle">IMDB Votes</p>
+        </article>      
+    `;
 }
