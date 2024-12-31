@@ -21,7 +21,8 @@ fs.readdir(targetDir,async (err,filenames)=>{
         console.log(err);
     }
 
-    const statPromises = filenames.map(filename => {
+    const statPromises = filenames.map(filename => { // Joins the targetDir and each filename to get the full path of the file/directory
+        
         return lstat(path.join(targetDir,filename));
     })
 
@@ -59,9 +60,9 @@ fs.readdir(targetDir,async (err,filenames)=>{
 //             if (err){
 //                 console.log(err);
 //             }
-//             allStats[index] = stats;
+//             allStats[index] = stats; // storing the stats object in allStats array at the correct index
 
-//             const ready = allStats.every(stats => {
+//             const ready = allStats.every(stats => { // checks if all elements in allStats are non-null
 //                 return stats;
 //             })
 //             if(ready){
@@ -95,3 +96,6 @@ fs.readdir(targetDir,async (err,filenames)=>{
 
 
 // 3. Wrap the lstat call with a promise, use async/await + the Promise.all helper method to process lstat calls all at once.
+
+// In onde.js, process.argv is a property that provides an array containing the command-line arguments passed to the currently
+// executing node.js script.
