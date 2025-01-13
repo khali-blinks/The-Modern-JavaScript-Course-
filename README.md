@@ -1,4 +1,4 @@
-# JS-Controlling Program Logic and Flow
+# The Modern JavaScript Course
 This repository is dedicated to exploring and mastering decision-making in JavaScript. It contains examples and exercises demonstrating the use of various programming constructs for controlling the flow of programs.
 
 ## Topics Covered
