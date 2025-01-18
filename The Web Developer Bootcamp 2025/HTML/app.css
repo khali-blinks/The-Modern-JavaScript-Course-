@@ -1,3 +1,27 @@
-h1{
-    background-color: rgb(95, 129, 129);
+*{
+    background-color: peru;
+}
+
+button{
+    font-size: 50px;
+}
+
+h1,h2{
+    color: blue;
+}
+
+section > button{
+    background-color: rgb(0, 255, 64);
+}
+
+button:hover{
+    background-color: blueviolet;
+}
+
+button:active{
+    background-color: cadetblue;
+}
+
+h2::first-letter{
+    font-size: 50px;
 }
