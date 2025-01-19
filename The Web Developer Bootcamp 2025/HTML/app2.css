@@ -1,0 +1,19 @@
+section{
+    background-color: aqua;
+    width: 800px;
+    height: 800px;
+}
+
+div{
+    background-color: rgb(76, 0, 255);
+    width: 50%;
+    height: 50%; 
+}
+
+h2{
+    font-size: 2em;
+}
+
+article{
+    font-size: 30px;
+}
