@@ -24,3 +24,26 @@ while(input !== 'quit' && input !=='q'){
 }
 console.log('OK YOU QUIT')
 
+const prices = [2.55,10.44,0.32,5.89,97]
+
+const minPrice = prices.reduce((min,price)=>{
+    if(min < price){
+        return min;
+    }else{
+        return price;
+    }
+})
+
+const person = {
+    firstName: 'Khali',
+    lastName: 'Fish',
+    fullName(){
+        return `${this.firstName} ${this.lastName}`
+    },
+    shoutName(){
+        console.log(this);
+        setTimeout(()=>{
+            console.log(this.fullName())
+        },2000)
+    }
+}
