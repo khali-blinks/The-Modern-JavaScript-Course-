@@ -1,46 +1,56 @@
-const p1Button = document.querySelector('#p1Button');
-const p2Button = document.querySelector('#p2Button');
-const p1Display = document.querySelector('#p1display')
-const p2Display = document.querySelector('#p2display')
+const p1 = {
+    score : 0,
+    button : document.querySelector('#p1Button'),
+    display : document.querySelector('#p1display')
+}
+
+const p2 = {
+    score : 0,
+    button : document.querySelector('#p2Button'),
+    display : document.querySelector('#p2display')
+}
+
 const resetButton = document.querySelector('#reset')
 const select = document.querySelector('#playto');
 
-let p1Score = 0;
-let p2Score = 0;
-let winningScore = parseInt(select.value);
+let winningScore = 3;
 let isGameOver = false;
 
-p1Button.addEventListener('click',()=>{
+function updateScore(player,opponent){
     if(!isGameOver){
-        p1Score+=1
+        player.score+=1
     }
-    if (p1Score === winningScore){
-        isGameOver = true;    
+    if (player.score === winningScore){
+        isGameOver = true; 
+        player.display.classList.add('has-text-success');
+        opponent.display.classList.add('has-text-danger');  
+        player.button.disabled = true;
+        opponent.button.disabled = true; 
     } 
-    p1Display.innerText = p1Score;
+    player.display.innerText = player.score;
+}
+
+p1.button.addEventListener('click',()=>{
+     updateScore(p1,p2)
 })
 
 select.addEventListener('change',()=>{
-    winningScore = parseInt(this.value);
+    winningScore = parseInt(select.value);
     reset();
 })
 
-p2Button.addEventListener('click',()=>{
-    if(!isGameOver){
-        p2Score+=1
-    }
-    if (p2Score === winningScore){
-        isGameOver = true;    
-    } 
-    p2Display.innerText = p2Score;
+p2.button.addEventListener('click',()=>{
+     updateScore(p2,p1);
 })
 
 resetButton.addEventListener('click',reset)
 
 function reset(){
     isGameOver = false;
-    p1Score = 0;
-    p2Score = 0;
-    p1Display.innerText = 0;
-    p2Display.innerText = 0;
+    for(p of [p1,p2]){
+        p.score = 0;
+        p.display.innerText = 0;
+        p.display.classList.remove('has-text-success','has-text-danger');
+        p.button.disabled = false;
+    }
 }
