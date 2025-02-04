@@ -24,5 +24,31 @@
 //   }
 //   starWars()
 
-axios.get("https://swapi.tech/api/people/1/")
-.th
+
+// axios.get("https://icanhazdadjoke.com/api",config)
+// .then((res)=>{
+//     console.log(res)
+// }) 
+const btn = document.querySelector('button');
+const ul = document.querySelector('ul');
+
+
+const dadJoke = async ()=>{
+    try{
+        const config = { headers : { Accept : 'application/json'}}
+        const joke = await axios.get("https://icanhazdadjoke.com",config);
+        return joke.data.joke
+     } catch(e){
+        console.log('CANNOT GET ACCESS TO SERVER :(',e)
+     }
+    }
+
+
+const addJoke = async() => {
+    const msg = await dadJoke();
+    const newLi = document.createElement('li');
+    newLi.innerText = msg;
+    ul.appendChild(newLi);
+}
+
+btn.addEventListener('click',addJoke)
